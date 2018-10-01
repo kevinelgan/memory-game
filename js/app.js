@@ -13,7 +13,7 @@ var cards = ['fa-diamond','fa-diamond',
 
 
 function generateCard(card) {
-    return `<li class="card"><i class="fa ${card}"></i></li>`;
+    return `<li class="card" data-card="${card}"><i class="fa ${card}"></i></li>`;
 }
 
 
@@ -78,20 +78,29 @@ allCards.forEach(function(card) {
                 openCards.push(card);
                 console.log('Open cards: ', openCards.length);
 
-                // Check if cards match
-
-
                 // If cards don't match, make them hide
                 if (openCards.length == 2) {
+                    
+                    
+                    if (openCards[0].dataset.card == openCards[1].dataset.card) {
+                        console.log('Cards match');
+                        openCards.forEach(function (card) {
+                            card.classList.add('match');
+                            card.classList.remove('open');
+                            card.classList.remove('show');
+                        });
+                        openCards = [];
+                        console.log("Open cards: ", openCards.length);
+                    } else {
+                      // If cards don't match
                     setTimeout(function () {
                         openCards.forEach(function (card) {
                             card.classList.remove('open', 'show');
                         });
                         openCards = [];
                         console.log('Open cards: ', openCards.length);
-                    }, 1000);
-
-
+                    }, 1000);  
+                    }
                 }
             }
         }
