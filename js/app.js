@@ -38,23 +38,32 @@ function shuffle(array) {
  */
 
 const allCards = document.querySelectorAll('.card');
-const openCards = [];
+let openCards = [];
 
 allCards.forEach(function(card) {
     card.addEventListener('click', function(e) {
-        console.log("card clicked");
-        card.classList.add('open', 'show');
-        openCards.push(card);
-        console.log('Open cards: ', openCards.length);
 
-        if (openCards.length >= 2) {
-            setTimeout(function() {
-                openCards.forEach(function(card) {
-                    card.classList.remove('open', 'show');
-                });
-            }, 1000);
-            console.log('Open cards: ', openCards.length);
+        if (!card.classList.contains('open') && !card.classList.contains('show') && !card.classList.contains('match')) {
             
+            if (openCards.length < 2) {
+                console.log("card clicked");
+                card.classList.add('open', 'show');
+                openCards.push(card);
+                console.log('Open cards: ', openCards.length);
+
+                if (openCards.length == 2) {
+                    setTimeout(function () {
+                        openCards.forEach(function (card) {
+                            card.classList.remove('open', 'show');
+                        });
+                        openCards = [];
+                        console.log('Open cards: ', openCards.length);
+                    }, 1000);
+
+
+                }
+            }
         }
+        
     });
 });
