@@ -2,6 +2,20 @@
  * Create a list that holds all of your cards
  */
 
+var cards = ['fa-diamond','fa-diamond',
+            'fa-paper-plane-o','fa-paper-plane-o',
+            'fa-anchor','fa-anchor',
+            'fa-bolt','fa-bolt',
+            'fa-cube','fa-cube',
+            'fa-leaf','fa-leaf',
+            'fa-bicycle','fa-bicycle',
+            'fa-bomb','fa-bomb'];
+
+
+function generateCard(card) {
+    return `<li class="card"><i class="fa ${card}"></i></li>`;
+}
+
 
 /*
  * Display the cards on the page
@@ -9,6 +23,19 @@
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
+
+function setupGame() {
+    var deck = document.querySelector('.deck');
+    var cardHTML = cards.map(function(card) {
+        return generateCard(card);
+    });
+
+    //console.log(cardHTML.join(''))
+    deck.innerHTML = cardHTML.join('');
+}
+
+setupGame();
+
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -37,8 +64,8 @@ function shuffle(array) {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
-const allCards = document.querySelectorAll('.card');
-let openCards = [];
+var allCards = document.querySelectorAll('.card');
+var openCards = [];
 
 allCards.forEach(function(card) {
     card.addEventListener('click', function(e) {
@@ -51,6 +78,10 @@ allCards.forEach(function(card) {
                 openCards.push(card);
                 console.log('Open cards: ', openCards.length);
 
+                // Check if cards match
+
+
+                // If cards don't match, make them hide
                 if (openCards.length == 2) {
                     setTimeout(function () {
                         openCards.forEach(function (card) {
