@@ -26,7 +26,7 @@ function generateCard(card) {
 
 function setupGame() {
     var deck = document.querySelector('.deck');
-    var cardHTML = cards.map(function(card) {
+    var cardHTML = shuffle(cards).map(function(card) {
         return generateCard(card);
     });
 
