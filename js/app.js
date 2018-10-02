@@ -32,7 +32,13 @@ function setupGame() {
 
     //console.log(cardHTML.join(''))
     deck.innerHTML = cardHTML.join('');
+    moves = 0;
+    moveCounter.innerText = moves;
+    
 }
+
+var moves = 0;
+var moveCounter = document.querySelector(".moves");
 
 setupGame();
 
@@ -66,6 +72,7 @@ function shuffle(array) {
 
 var allCards = document.querySelectorAll('.card');
 var openCards = [];
+
 
 allCards.forEach(function(card) {
     card.addEventListener('click', function(e) {
@@ -101,6 +108,9 @@ allCards.forEach(function(card) {
                         console.log('Open cards: ', openCards.length);
                     }, 1000);  
                     }
+                moves++;
+                console.log('Total moves: ', moves);
+                moveCounter.innerText = moves;
                 }
             }
         }
