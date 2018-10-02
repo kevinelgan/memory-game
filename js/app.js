@@ -84,6 +84,8 @@ function shuffle(array) {
 
 function gameOver() {
     resetTimer();
+    // TODO: Create modal for GameOver
+
     return console.log('You won in ',time,' seconds!');
 }
 
@@ -189,9 +191,6 @@ allCards.forEach(function (card) {
         }
     });
 });
-
-
-
 
 resetButton.addEventListener('click', function (e) {
     location.reload();
