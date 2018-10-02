@@ -40,7 +40,8 @@ function setupGame() {
 }
 
 var moves = 0;
-var moveCounter = document.querySelector(".moves");
+var moveCounter = document.querySelector('.moves');
+
 
 setupGame();
 
@@ -74,7 +75,7 @@ function shuffle(array) {
 
 var allCards = document.querySelectorAll('.card');
 var openCards = [];
-
+var starsCounter = document.querySelector(".stars");
 
 allCards.forEach(function(card) {
     card.addEventListener('click', function(e) {
@@ -110,9 +111,18 @@ allCards.forEach(function(card) {
                         console.log('Open cards: ', openCards.length);
                     }, 1000);  
                     }
-                moves++;
-                console.log('Total moves: ', moves);
-                moveCounter.innerText = moves;
+                    moves++;
+                    
+                    // Update Move counter
+                    console.log('Total moves: ', moves);
+                    moveCounter.innerText = moves;
+                    
+                    // Check moves and update stars
+                    if (moves == 3) {
+                        starsCounter.lastElementChild.remove();
+                    } else if (moves == 8) {
+                        starsCounter.lastElementChild.remove();
+                    }
                 }
             }
         }
