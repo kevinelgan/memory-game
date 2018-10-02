@@ -129,7 +129,7 @@ allCards.forEach(function(card) {
 
                     // Check for Win Condition
                     if (matchedPairs == 8) {
-                        console.log('You won!');
+                        gameOver();
                     }
                 }
             }
@@ -137,3 +137,7 @@ allCards.forEach(function(card) {
         
     });
 });
+
+function gameOver() {
+    return console.log('You won!');
+}
