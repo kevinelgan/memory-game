@@ -76,6 +76,7 @@ function shuffle(array) {
 var allCards = document.querySelectorAll('.card');
 var openCards = [];
 var starsCounter = document.querySelector(".stars");
+var matchedPairs = 0;
 
 allCards.forEach(function(card) {
     card.addEventListener('click', function(e) {
@@ -100,6 +101,8 @@ allCards.forEach(function(card) {
                             card.classList.remove('show');
                         });
                         openCards = [];
+                        matchedPairs++;
+                        console.log("Matched Pairs", matchedPairs);
                         console.log("Open cards: ", openCards.length);
                     } else {
                     // If cards don't match, hide
@@ -122,6 +125,11 @@ allCards.forEach(function(card) {
                         starsCounter.lastElementChild.remove();
                     } else if (moves == 8) {
                         starsCounter.lastElementChild.remove();
+                    }
+
+                    // Check for Win Condition
+                    if (matchedPairs == 8) {
+                        console.log('You won!');
                     }
                 }
             }
