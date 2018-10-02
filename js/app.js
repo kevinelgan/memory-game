@@ -12,7 +12,7 @@ var cards = ['fa-diamond','fa-diamond',
             'fa-bomb','fa-bomb'];
 
 
-function generateCard(card) {
+function generateCardHTML(card) {
     return `<li class="card" data-card="${card}"><i class="fa ${card}"></i></li>`;
 }
 
@@ -26,8 +26,8 @@ function generateCard(card) {
 
 function setupGame() {
     var deck = document.querySelector('.deck');
-    var cardHTML = shuffle(cards).map(function(card) {
-        return generateCard(card);
+    var cardHTML = cards.map(function(card) { // TODO - add shuffle function back
+        return generateCardHTML(card);
     });
 
     //console.log(cardHTML.join(''))
@@ -78,10 +78,10 @@ allCards.forEach(function(card) {
                 openCards.push(card);
                 console.log('Open cards: ', openCards.length);
 
-                // If cards don't match, make them hide
+                // If two cards are open, check for matching
                 if (openCards.length == 2) {
                     
-                    
+                    // Check for match
                     if (openCards[0].dataset.card == openCards[1].dataset.card) {
                         console.log('Cards match');
                         openCards.forEach(function (card) {
@@ -92,7 +92,7 @@ allCards.forEach(function(card) {
                         openCards = [];
                         console.log("Open cards: ", openCards.length);
                     } else {
-                      // If cards don't match
+                    // If cards don't match, hide
                     setTimeout(function () {
                         openCards.forEach(function (card) {
                             card.classList.remove('open', 'show');
