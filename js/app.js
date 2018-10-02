@@ -3,11 +3,15 @@
  */
 
 
-var time = 0;
-var timer;
-var gameOn = false;
+let time = 0;
+let timer;
+let gameOn = false;
 
-var cards = ['fa-diamond','fa-diamond',
+let openCards = [];
+const starsCounter = document.querySelector(".stars");
+let matchedPairs = 0;
+
+const cards = ['fa-diamond','fa-diamond',
             'fa-paper-plane-o','fa-paper-plane-o',
             'fa-anchor','fa-anchor',
             'fa-bolt','fa-bolt',
@@ -30,8 +34,8 @@ function generateCardHTML(card) {
  */
 
 function setupGame() {
-    var deck = document.querySelector('.deck');
-    var cardHTML = cards.map(function(card) { // TODO - add shuffle function back
+    const deck = document.querySelector('.deck');
+    let cardHTML = cards.map(function(card) { // TODO - add shuffle function back
         return generateCardHTML(card);
     });
 
@@ -45,8 +49,8 @@ function setupGame() {
     resetTimer();
 }
 
-var moves = 0;
-var moveCounter = document.querySelector('.moves');
+let moves = 0;
+const moveCounter = document.querySelector('.moves');
 
 
 setupGame();
@@ -79,76 +83,9 @@ function shuffle(array) {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
-var allCards = document.querySelectorAll('.card');
-var openCards = [];
-var starsCounter = document.querySelector(".stars");
-var matchedPairs = 0;
 
-allCards.forEach(function(card) {
-    card.addEventListener('click', function(e) {
-        
-        // Start timer on first click
-        if(gameOn == false){
-            startTimer();
-            gameOn = true;
-        }
 
-        if (!card.classList.contains('open') && !card.classList.contains('show') && !card.classList.contains('match')) {
-            
-            if (openCards.length < 2) {
-                console.log("card clicked");
-                card.classList.add('open', 'show');
-                openCards.push(card);
-                console.log('Open cards: ', openCards.length);
 
-                // If two cards are open, check for matching
-                if (openCards.length == 2) {
-                    
-                    // Check for match
-                    if (openCards[0].dataset.card == openCards[1].dataset.card) {
-                        console.log('Cards match');
-                        openCards.forEach(function (card) {
-                            card.classList.add('match');
-                            card.classList.remove('open');
-                            card.classList.remove('show');
-                        });
-                        openCards = [];
-                        matchedPairs++;
-                        console.log("Matched Pairs", matchedPairs);
-                        console.log("Open cards: ", openCards.length);
-                    } else {
-                    // If cards don't match, hide
-                    setTimeout(function () {
-                        openCards.forEach(function (card) {
-                            card.classList.remove('open', 'show');
-                        });
-                        openCards = [];
-                        console.log('Open cards: ', openCards.length);
-                    }, 1000);  
-                    }
-                    moves++;
-                    
-                    // Update Move counter
-                    console.log('Total moves: ', moves);
-                    moveCounter.innerText = moves;
-                    
-                    // Check moves and update stars
-                    if (moves == 3) {
-                        starsCounter.lastElementChild.remove();
-                    } else if (moves == 8) {
-                        starsCounter.lastElementChild.remove();
-                    }
-
-                    // Check for Win Condition
-                    if (matchedPairs == 8) {
-                        gameOver();
-                    }
-                }
-            }
-        }
-        
-    });
-});
 
 function gameOver() {
     resetTimer();
@@ -165,3 +102,82 @@ function startTimer() {
 function resetTimer() {
     clearInterval(timer);
 }
+
+
+// Event Listeners
+
+const allCards = document.querySelectorAll(".card");
+
+allCards.forEach(function (card) {
+    card.addEventListener('click', function (e) {
+
+        // Start timer on first click
+        if (gameOn == false) {
+            startTimer();
+            gameOn = true;
+        }
+
+        if (!card.classList.contains('open') && !card.classList.contains('show') && !card.classList.contains('match')) {
+
+            if (openCards.length < 2) {
+                console.log("card clicked");
+                card.classList.add('open', 'show');
+                openCards.push(card);
+                console.log('Open cards: ', openCards.length);
+
+                // If two cards are open, check for matching
+                if (openCards.length == 2) {
+
+                    // Check for match
+                    if (openCards[0].dataset.card == openCards[1].dataset.card) {
+                        console.log('Cards match');
+                        openCards.forEach(function (card) {
+                            card.classList.add('match');
+                            card.classList.remove('open');
+                            card.classList.remove('show');
+                        });
+                        openCards = [];
+                        matchedPairs++;
+                        console.log("Matched Pairs", matchedPairs);
+                        console.log("Open cards: ", openCards.length);
+                    } else {
+                        // If cards don't match, hide
+                        setTimeout(function () {
+                            openCards.forEach(function (card) {
+                                card.classList.remove('open', 'show');
+                            });
+                            openCards = [];
+                            console.log('Open cards: ', openCards.length);
+                        }, 1000);
+                    }
+                    moves++;
+
+                    // Update Move counter
+                    console.log('Total moves: ', moves);
+                    moveCounter.innerText = moves;
+
+                    // Check moves and update stars
+                    if (moves == 3) {
+                        starsCounter.lastElementChild.remove();
+                    } else if (moves == 8) {
+                        starsCounter.lastElementChild.remove();
+                    }
+
+                    // Check for Win Condition
+                    if (matchedPairs == 8) {
+                        gameOver();
+                    }
+                }
+            }
+        }
+
+    });
+});
+
+
+
+const resetButton = document.querySelector('.restart');
+
+resetButton.addEventListener('click', function (e) {
+    location.reload();
+});
