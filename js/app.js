@@ -34,6 +34,8 @@ function setupGame() {
     deck.innerHTML = cardHTML.join('');
     moves = 0;
     moveCounter.innerText = moves;
+
+    // Initialize timer with setInterval
     
 }
 
