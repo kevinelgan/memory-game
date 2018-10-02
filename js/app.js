@@ -2,6 +2,11 @@
  * Create a list that holds all of your cards
  */
 
+
+var time = 0;
+var timer;
+var gameOn = false;
+
 var cards = ['fa-diamond','fa-diamond',
             'fa-paper-plane-o','fa-paper-plane-o',
             'fa-anchor','fa-anchor',
@@ -36,7 +41,8 @@ function setupGame() {
     moveCounter.innerText = moves;
 
     // Initialize timer with setInterval
-    
+    time = 0;
+    resetTimer();
 }
 
 var moves = 0;
@@ -80,6 +86,12 @@ var matchedPairs = 0;
 
 allCards.forEach(function(card) {
     card.addEventListener('click', function(e) {
+        
+        // Start timer on first click
+        if(gameOn == false){
+            startTimer();
+            gameOn = true;
+        }
 
         if (!card.classList.contains('open') && !card.classList.contains('show') && !card.classList.contains('match')) {
             
@@ -139,5 +151,17 @@ allCards.forEach(function(card) {
 });
 
 function gameOver() {
-    return console.log('You won!');
+    resetTimer();
+    return console.log('You won in ',time,' seconds!');
+}
+
+function startTimer() {
+    timer = setInterval(function() {
+        time++;
+        console.log(time);
+    }, 1000);
+}
+
+function resetTimer() {
+    clearInterval(timer);
 }
