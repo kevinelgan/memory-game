@@ -2,14 +2,16 @@
  * Create a list that holds all of your cards
  */
 
-
+let matchedPairs = 0;
 let time = 0;
 let timer;
 let gameOn = false;
-
+let moves = 0;
 let openCards = [];
+
 const starsCounter = document.querySelector(".stars");
-let matchedPairs = 0;
+const moveCounter = document.querySelector(".moves");
+const resetButton = document.querySelector(".restart");
 
 const cards = ['fa-diamond','fa-diamond',
             'fa-paper-plane-o','fa-paper-plane-o',
@@ -41,17 +43,13 @@ function setupGame() {
 
     //console.log(cardHTML.join(''))
     deck.innerHTML = cardHTML.join('');
-    moves = 0;
-    moveCounter.innerText = moves;
+    //moves = 0;
+    //moveCounter.innerText = moves;
 
     // Initialize timer with setInterval
     time = 0;
     resetTimer();
 }
-
-let moves = 0;
-const moveCounter = document.querySelector('.moves');
-
 
 setupGame();
 
@@ -84,9 +82,6 @@ function shuffle(array) {
  */
 
 
-
-
-
 function gameOver() {
     resetTimer();
     return console.log('You won in ',time,' seconds!');
@@ -95,12 +90,75 @@ function gameOver() {
 function startTimer() {
     timer = setInterval(function() {
         time++;
-        console.log(time);
+        gameOn = true;
+        //console.log(time);
     }, 1000);
 }
 
 function resetTimer() {
     clearInterval(timer);
+}
+
+function showCard(card) {
+    //console.log("card clicked");
+    card.classList.add('open', 'show');
+    openCards.push(card);
+    //console.log('Open cards: ', openCards.length);
+}
+
+function hideCards() {
+    // If cards don't match, hide
+    setTimeout(function () {
+        openCards.forEach(function (card) {
+            card.classList.remove('open', 'show');
+        });
+        openCards = [];
+        //console.log('Open cards: ', openCards.length);
+    }, 1000);
+}
+
+function isMatching(card1,card2) {
+    if (card1 == card2) {
+        console.log('Cards match');
+        openCards.forEach(function (card) {
+            card.classList.add('match');
+            card.classList.remove('open');
+            card.classList.remove('show');
+        });
+        openCards = [];
+        incrementPairs();
+        
+        //console.log("Open cards: ", openCards.length);
+    } else {
+        console.log('no match');
+        hideCards();
+    }
+    incrementMoves();
+}
+
+function incrementPairs() {
+    matchedPairs++;
+    console.log("Matched Pairs", matchedPairs);
+
+    // Check for Win Condition
+    if (matchedPairs == 8) {
+        gameOver();
+    }
+}
+
+function incrementMoves() {
+    moves++;
+
+    // Update Move counter
+    console.log('Total moves: ', moves);
+    moveCounter.innerText = moves;
+
+    // Check moves and update stars
+    if (moves == 3) {
+        starsCounter.lastElementChild.remove();
+    } else if (moves == 8) {
+        starsCounter.lastElementChild.remove();
+    }
 }
 
 
@@ -114,69 +172,26 @@ allCards.forEach(function (card) {
         // Start timer on first click
         if (gameOn == false) {
             startTimer();
-            gameOn = true;
         }
 
+        // If card isn't open, show or matched, then flip the card
         if (!card.classList.contains('open') && !card.classList.contains('show') && !card.classList.contains('match')) {
 
             if (openCards.length < 2) {
-                console.log("card clicked");
-                card.classList.add('open', 'show');
-                openCards.push(card);
-                console.log('Open cards: ', openCards.length);
+                showCard(card);
 
                 // If two cards are open, check for matching
                 if (openCards.length == 2) {
-
                     // Check for match
-                    if (openCards[0].dataset.card == openCards[1].dataset.card) {
-                        console.log('Cards match');
-                        openCards.forEach(function (card) {
-                            card.classList.add('match');
-                            card.classList.remove('open');
-                            card.classList.remove('show');
-                        });
-                        openCards = [];
-                        matchedPairs++;
-                        console.log("Matched Pairs", matchedPairs);
-                        console.log("Open cards: ", openCards.length);
-                    } else {
-                        // If cards don't match, hide
-                        setTimeout(function () {
-                            openCards.forEach(function (card) {
-                                card.classList.remove('open', 'show');
-                            });
-                            openCards = [];
-                            console.log('Open cards: ', openCards.length);
-                        }, 1000);
-                    }
-                    moves++;
-
-                    // Update Move counter
-                    console.log('Total moves: ', moves);
-                    moveCounter.innerText = moves;
-
-                    // Check moves and update stars
-                    if (moves == 3) {
-                        starsCounter.lastElementChild.remove();
-                    } else if (moves == 8) {
-                        starsCounter.lastElementChild.remove();
-                    }
-
-                    // Check for Win Condition
-                    if (matchedPairs == 8) {
-                        gameOver();
-                    }
+                    isMatching(openCards[0].dataset.card, openCards[1].dataset.card);
                 }
             }
         }
-
     });
 });
 
 
 
-const resetButton = document.querySelector('.restart');
 
 resetButton.addEventListener('click', function (e) {
     location.reload();
