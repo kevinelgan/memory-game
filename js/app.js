@@ -41,7 +41,7 @@ function generateCardHTML(card) {
 
 function setupGame() {
     const deck = document.querySelector('.deck');
-    let cardHTML = cards.map(function(card) { // TODO - add shuffle function back
+    let cardHTML = shuffle(cards).map(function(card) { // TODO - add shuffle function back
         return generateCardHTML(card);
     });
 
@@ -163,9 +163,9 @@ function incrementMoves() {
     moveCounter.innerText = moves;
 
     // Check moves and update stars
-    if (moves == 3) {
+    if (moves == 10) {
         starsCounter.lastElementChild.remove();
-    } else if (moves == 8) {
+    } else if (moves == 15) {
         starsCounter.lastElementChild.remove();
     }
 }
