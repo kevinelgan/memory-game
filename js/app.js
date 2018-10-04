@@ -88,7 +88,6 @@ function shuffle(array) {
 
 function gameOver() {
     resetTimer();
-    // TODO: Create modal for GameOver
     toggleModal();
     closeButton.addEventListener('click', toggleModal);
     window.addEventListener('click', windowOnClick);
