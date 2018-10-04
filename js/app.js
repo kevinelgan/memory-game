@@ -12,6 +12,10 @@ let openCards = [];
 const starsCounter = document.querySelector(".stars");
 const moveCounter = document.querySelector(".moves");
 const resetButton = document.querySelector(".restart");
+const modal = document.querySelector(".modal");
+const closeButton = document.querySelector(".close-button");
+const newGameButton = document.querySelector(".newGame");
+const finalTime = document.querySelector(".finalTime");
 
 const cards = ['fa-diamond','fa-diamond',
             'fa-paper-plane-o','fa-paper-plane-o',
@@ -85,7 +89,10 @@ function shuffle(array) {
 function gameOver() {
     resetTimer();
     // TODO: Create modal for GameOver
-
+    toggleModal();
+    closeButton.addEventListener('click', toggleModal);
+    window.addEventListener('click', windowOnClick);
+    finalTime.innerText = time;
     return console.log('You won in ',time,' seconds!');
 }
 
@@ -193,5 +200,22 @@ allCards.forEach(function (card) {
 });
 
 resetButton.addEventListener('click', function (e) {
+    location.reload();
+});
+
+
+// Modal functions
+function toggleModal() {
+    modal.classList.toggle("show-modal");
+}
+
+function windowOnClick(event) {
+    if (event.target === modal) {
+        toggleModal();
+    }
+}
+
+newGameButton.addEventListener('click', function(e) {
+    console.log("new game button clicked");
     location.reload();
 });
