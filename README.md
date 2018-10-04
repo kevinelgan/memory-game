@@ -1,20 +1,18 @@
 # Memory Game Project
 
-## Table of Contents
-
-* [Instructions](#instructions)
-* [Contributing](#contributing)
+## Overview
+The second project of the Udacity Front-End Nanodegree program.
 
 ## Instructions
 
-The starter project has some HTML and CSS styling to display a static version of the Memory Game project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
+Click on cards to find the matching pairs. When you click for the first time, you start a game timer that tracks your total time played. Score is determined by the number of moves required to complete the game.
 
-To get started, open `js/app.js` and start building out the app's functionality
+## Built with
+* HTML
+* CSS
+* Javascript
 
-For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
-
-## Contributing
-
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
-
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+## Resources
+* [Udacity Starter Code](https://github.com/udacity/fend-project-memory-game)
+* [Udacity Webinar](https://www.youtube.com/watch?reload=9&reload=9&v=_rUH-sEs68Y&app=desktop)
+  
